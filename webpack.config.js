@@ -9,7 +9,7 @@ module.exports = (env, argv) => ({
   devtool: argv.mode === 'production' ? false : 'inline-source-map',
 
   entry: {
-    ui: './src/app/index.tsx', // The entry point for your UI code
+    ui: './src/index.tsx', // The entry point for your UI code
     code: './src/plugin/controller.ts', // The entry point for your plugin code
   },
 
@@ -23,6 +23,23 @@ module.exports = (env, argv) => ({
 
       // Allows you to use "<%= require('./file.svg') %>" in your HTML code to get a data URI
       { test: /\.(png|jpg|gif|webp|svg)$/, loader: 'url-loader' },
+
+      // Handles image and SVG files
+      // {
+      //   test: /\.(png|jpg|gif|webp|svg)$/,
+      //   use: [
+      //     {
+      //       loader: 'url-loader',
+      //       options: {
+      //         limit: 8192, // Files larger than 8KB will be emitted as a separate file
+      //         name: '[name].[ext]', // Use the original file name and extension
+      //         outputPath: 'images/', // Where to put images, relative to the output path
+      //         publicPath: 'images/', // Overrides the path where the images are located (useful for CDN)
+      //         fallback: 'file-loader' // Use `file-loader` as a fallback for files not converted to data URIs
+      //       }
+      //     },
+      //     ]
+      //   },
     ],
   },
 
@@ -37,7 +54,7 @@ module.exports = (env, argv) => ({
   // Tells Webpack to generate "ui.html" and to inline "ui.ts" into it
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/app/index.html',
+      template: './src/index.html',
       filename: 'ui.html',
       chunks: ['ui'],
       cache: false,
